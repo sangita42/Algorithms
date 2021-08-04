@@ -1,0 +1,102 @@
+Naive: Approach: The idea is to traverse every array element and find the highest bars on the left and right sides.
+Take the smaller of two heights. The difference between the smaller height and height of the current element is the amount of water that can be stored in this array element.
+so it willbe for index i ->min(left,right)-arr[i];
+
+int maxWater(int arr[], int n)
+{
+     
+    // To store the maximum water
+    // that can be stored
+    int res = 0;
+     
+    // For every element of the array
+    for (int i = 1; i < n-1; i++) {
+         
+        // Find the maximum element on its left
+        int left = arr[i];
+        for (int j=0; j<i; j++)
+           left = max(left, arr[j]);
+         
+        // Find the maximum element on its right  
+        int right = arr[i];
+        for (int j=i+1; j<n; j++)
+           right = max(right, arr[j]);
+        
+       // Update the maximum water   
+       res = res + (min(left, right) - arr[i]);  
+    }
+ 
+    return res;
+}
+Time Complexity: O(n2). 
+There are two nested loops traversing the array, So time Complexity is O(n2).
+Space Complexity: O(1). 
+No extra space is required.
+2nd approach: Using leftprefix array and right prefix array. for each index leftprefix array will store the value of leftmax for that index and rightmax.So final water filled 
+by each index will be -> min(leftprefix[i],rightprefix[i])-arr[i].
+
+code:
+public int trap(int[] height) {
+        int n = height.length;
+        int[] leftprefix=new int[n];
+        int[] rightprefix = new int[n];
+        for(int i=0;i<n;i++){
+            if(i==0){
+                leftprefix[i]=height[i];
+            }
+            else{
+                leftprefix[i]=Math.max(height[i],leftprefix[i-1]);
+            }
+        }
+        for(int i=n-1;i>=0;i--){
+            if(i==n-1){
+                rightprefix[i]=height[i];
+            }
+            else{
+                rightprefix[i]=Math.max(height[i],rightprefix[i+1]);
+            }
+            
+        }
+        int water=0;
+        for(int i=0;i<n;i++){
+            water+=Math.min(leftprefix[i],rightprefix[i])-height[i];
+        }
+       return water; 
+    }
+    Time complexity: For leftprefix array it will take O(n) and for right O(n). So total it will be O(n)+O(n)+o(N)=o(N) and space complexity is O(2n).
+    3rd approach:
+    Two pointer approach:
+    class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        int maxleft=0,maxright=0;
+        int l=0,r=n-1;
+        int water=0;
+        while(l<=r){
+            if(height[l]<=height[r]){
+            if(height[l]>=maxleft){
+                maxleft=height[l];
+            }
+                else{
+                    water+=maxleft-height[l];
+                }
+                l++;
+            }
+            else{
+                if(height[r]>=maxright){
+                    maxright=height[r];
+                }
+                else{
+                    water=maxright-height[r];
+                }
+                r--;
+                
+            }
+            
+        }
+        return water;
+    }
+}
+Time Complexity: O(n)
+Auxiliary Space: O(1) 
+
