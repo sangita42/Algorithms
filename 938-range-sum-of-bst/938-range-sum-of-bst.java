@@ -21,13 +21,13 @@ class Solution {
         }
         if(root.val <= R && root.val >= L){
             sum += root.val;
-            helper(root.left, L, R);
-            helper(root.right, L, R);
-        }else if(root.val < L){
-            helper(root.right, L, R); //no need to go left since the left branch must be smaller than L
-        }else{ //root great than R
-            helper(root.left, L, R); //no need to go right since the right branch must be larger than R
         }
+             
+            helper(root.right, L, R);
+             
+        
+            helper(root.left, L, R); 
+        
         
     }
     public int rangeSumBST(TreeNode root, int low, int high) {
