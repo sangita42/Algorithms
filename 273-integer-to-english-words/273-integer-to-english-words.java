@@ -12,20 +12,20 @@ class Solution {
         
     }
     public String helper(int num){
-        StringBuilder sb=new StringBuilder();
+        
         if (num >= 1000000000) {
-            sb.append(helper(num / 1000000000)).append(" Billion ").append( helper(num % 1000000000));
+            return (helper(num / 1000000000)+" Billion "+helper(num % 1000000000)).trim();
         } else if  (num >= 1000000) {
-            sb.append(helper(num / 1000000)).append(" Million ").append( helper(num % 1000000));
+            return (helper(num / 1000000)+" Million "+ helper(num % 1000000)).trim();
         }else if (num >= 1000) {
-            sb.append(helper(num / 1000)).append(" Thousand ").append( helper(num % 1000));
+            return (helper(num / 1000)+" Thousand "+helper(num % 1000)).trim();
         }else if (num >= 100) {
-            sb.append(helper(num / 100)).append(" Hundred ").append( helper(num % 100));
+            return (helper(num / 100)+" Hundred "+helper(num % 100)).trim();
         }else if (num >= 20) {
-            sb.append(tens[num / 10]).append(" ").append( helper(num % 10));
+            return (tens[num / 10]+" "+helper(num % 10)).trim();
         } else {
-            sb.append(ones[num]);
+            return ones[num].trim();
         }
-        return sb.toString().trim();
+        
     }
 }
