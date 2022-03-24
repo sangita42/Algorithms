@@ -11,52 +11,34 @@
 class Solution {
 public:
     void del(ListNode* &head, int val){
-        ListNode *temp=head;
-        ListNode* first=NULL;
-        ListNode* next = NULL;
-        while(temp){
-            ListNode* start=temp;
-            if(temp->val==val){
-                 first=temp;
-                temp=temp->next;
+        if(head==NULL){
+            return;
+        }
+        
+            if(head->val==val){
+               ListNode *temp=head;
+                head=head->next;
+                delete(temp);
+                del(head,val);
+                
             }
-            next=temp->next;
-            if(first!=NULL){
-                  first->next=next;
+            else{
+                del(head->next,val);
             }
+            
+            
+            
             
         
-            temp=next;
-            
-            
-        }
+        
+        
+        
         
         
         
     }
     ListNode* removeElements(ListNode* head, int val) {
-        ListNode *temp=head;
-        ListNode* first=NULL;
-        ListNode* next = NULL;
-        while(temp){
-            if(temp->val==val){
-                if(first==NULL){
-                    head=head->next;
-                    
-                }
-                else{
-                first->next=temp->next;
-                }
-                
-            }
-            else{
-                first=temp;
-            }
-            temp=temp->next;
-            
-            
-            
-        }
+        del(head,val);
         return head;
         
     }
