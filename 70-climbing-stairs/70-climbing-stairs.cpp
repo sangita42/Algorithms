@@ -13,8 +13,14 @@ public:
         return v[n]= climb(n-1,v)+climb(n-2,v);
     }
     int climbStairs(int n) {
-        vector<int> v(n+1,-1);
-        return climb(n,v);
+        //vector<int> v(n+1,-1);
+        int v[n+1];
+        v[0]=1;
+        v[1]=1;
+        for(int i=2;i<=n;i++){
+            v[i]=v[i-1]+v[i-2];
+        }
+        return v[n];
         
     }
 };
