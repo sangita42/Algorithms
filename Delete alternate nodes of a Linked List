@@ -1,0 +1,60 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+class node{
+    public:
+       int num;
+       node *next;
+       node(int val){
+        num=val;
+        next=NULL;
+    }
+};
+void newNode(node* &head,int val){
+    node *temp=new node(val);
+    if(head==NULL){
+        head=temp;
+        return;
+        
+    }
+    node* ptr=head;
+    while(ptr->next!=NULL){
+        ptr=ptr->next;
+    }
+    ptr->next=temp;
+    return;
+}
+void print(node *head){
+    while(head!=NULL){
+        cout<<head->num<<" ";
+        head=head->next;
+    }
+}
+void deleteall(node *head){
+    if(head==NULL){
+        return;
+    }
+    //head->next=deleteall(head->next->next);
+    node *prev=head; //1
+    node *temp=head->next;//2
+    while(prev && temp){
+        prev->next=temp->next;// 1 5 n
+        prev=prev->next;//5 n
+        if(prev){
+        temp=prev->next;
+        }//4
+    }
+}
+
+
+int main() {
+	node *head=NULL;
+	newNode(head,1);
+	newNode(head,2);
+		newNode(head,5);
+	newNode(head,4);
+		
+		deleteall(head);
+	print(head);
+	return 0;
+}
