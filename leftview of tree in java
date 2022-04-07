@@ -1,0 +1,49 @@
+import java.util.*;
+
+class node{
+    int num;
+    node left,right;
+    node(int num){
+        this.num=num;
+        left=right=null;
+    }
+}
+class Solution{
+    static void preorder(node root){
+        if(root==null){
+            return;
+        }
+        preorder(root.left);
+        preorder(root.right);
+        System.out.println(root.num);
+        
+    }
+    public static void leftview(node root,List<Integer>arr,int level){
+        if(root==null){
+            return;
+        }
+        
+        if(arr.size()==level){
+            arr.add(root.num);
+            
+        }
+        leftview(root.left,arr,level+1);
+         leftview(root.right,arr,level+1);
+        
+        
+    }
+    
+    public static void main(String[] args){
+        node root=new node(1);
+        root.left=new node(2);
+        root.right=new node(3);
+        root.left.left=new node(5);
+        List<Integer>arr=new ArrayList<>();
+        leftview(root,arr,0);
+        for(int it:arr){
+            System.out.print(it);
+        }
+         
+        
+    }
+}
