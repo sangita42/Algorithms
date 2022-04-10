@@ -1,28 +1,41 @@
 class Solution {
 public:
     int nextGreaterElement(int n) {
-        
-        string s = to_string(n);
-        int i = s.size() - 1;
-		// ascending
-        for(; i>=0; i--) {
-            if(s[i+1] > s[i]) break;
+        vector<int>v;
+        int num=n;
+        while(num>0){
+            v.push_back(num%10);
+            num=num/10;
         }
-        if(i < 0) return -1;
-        int tmp = i;
-        int minn = INT_MAX;
-        int idx = -1;
-		// swap with just greater number
-        for(int j=s.size()-1; j>=i; j--) {
-            if(s[j] > s[i]) {
-                swap(s[i], s[j]);
+        reverse(v.begin(),v.end());
+        int i,j;
+        for(i=v.size()-2;i>=0;i--){
+            
+            if(v[i]<v[i+1]){
                 break;
             }
         }
-		// reverse
-        reverse(s.begin()+i+1, s.end());
-        long res = stol(s);
-        return res > INT_MAX ? -1 : res;
+        if(i<0){
+            return -1;
+        }
+        else{
+            for(j=v.size()-1;j>i;j--){
+                if(v[j]>v[i]){
+                    break;
+                }
+            }
+            swap(v[i],v[j]);
+            reverse(v.begin()+i+1,v.end());
+        }
+        long long int s=0;
+        for(int i=0;i<v.size();i++){
+            s=s*10+v[i];
+            
+        }
+        if(s>INT_MAX){
+            return -1;
+        }
+        return s;
+        
     }
-    
 };
