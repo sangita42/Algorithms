@@ -1,36 +1,52 @@
 class Solution {
-    
-    public static void dfs(int i,int j,char[][] board,int n,int m){
-        if(i<0||j<0||i>=n||j>=m||board[i][j]!='O') return;
-        board[i][j]='#';
-        dfs(i+1,j,board,n,m);//dfs(4,1)
-         dfs(i-1,j,board,n,m);//dfs(2,1)
-         dfs(i,j+1,board,n,m);//dfs(3,2)
-         dfs(i,j-1,board,n,m);//dfs(3,0)
-        
-        
-    }
     public void solve(char[][] board) {
         int n=board.length;
         int m=board[0].length;
+        Queue<int[]>q=new LinkedList<>();
         for(int i=0;i<n;i++){
             if(board[i][0]=='O'){
-                dfs(i,0,board,n,m);
+                board[i][0]='#';
+                q.offer(new int[]{i,0});
             }
             if(board[i][m-1]=='O'){
-                dfs(i,m-1,board,n,m);
+                board[i][m-1]='#';
+                q.offer(new int[]{i,m-1});
+                
             }
                 
         }
         for(int i=0;i<m;i++){
             if(board[0][i]=='O'){
-                dfs(0,i,board,n,m);
+                board[0][i]='#';
+                q.offer(new int[]{0,i});
             }
             if(board[n-1][i]=='O'){
-                dfs(n-1,i,board,n,m);// dfs(3,1)
+                board[n-1][i]='#';
+                q.offer(new int[]{n-1,i});
             }
         }
-         for(int i=0;i<n;i++){
+         
+        int dx[]={-1,0,0,1};
+        int dy[]={0,1,-1,0};
+        while(!q.isEmpty()){
+            int temp[] = q.poll();
+            int x=temp[0];
+            int y=temp[1];
+            board[x][y]='#';
+            
+            for(int i=0;i<4;i++){
+                int dirx=x+dx[i];
+                int diry=y+dy[i];
+                if(dirx<0||diry<0||dirx>=n||diry>=m||board[dirx][diry]!='O'){
+                    continue;
+                }
+                q.offer(new int[]{dirx,diry});
+                
+                
+            }
+        }
+           
+        for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(board[i][j]=='O'){
                     board[i][j]='X';
@@ -38,6 +54,9 @@ class Solution {
                 
             }
         }
+            
+            
+            
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(board[i][j]=='#'){
