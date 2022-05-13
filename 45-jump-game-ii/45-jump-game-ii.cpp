@@ -14,8 +14,18 @@ public:
         return dp[ind]=ans;
     }
     int jump(vector<int>& nums) {
-        vector<int>dp(nums.size(),-1);
-        return minJump(0,nums.size()-1,nums,dp);
+        vector<int>dp(nums.size(),INT_MAX);
+        dp[0]=0;
+        
+        for(int ind=0;ind<nums.size();ind++){
+            
+            for(int j=1;j<=nums[ind]&&ind+j<nums.size();j++){
+                dp[ind+j]=min(1+dp[ind],dp[ind+j]);
+            }
+            
+        }
+        
+        return dp[nums.size()-1];
         
     }
 };
